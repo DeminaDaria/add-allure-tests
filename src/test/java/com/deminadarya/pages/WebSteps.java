@@ -32,5 +32,4 @@ public class WebSteps {
     public void searchNameIssue(String nameIssue) {
         $("#issue_81_link").shouldHave(text(nameIssue));
     }
-
 }

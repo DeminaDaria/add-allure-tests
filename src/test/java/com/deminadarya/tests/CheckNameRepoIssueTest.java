@@ -1,8 +1,13 @@
 package com.deminadarya.tests;
 
-import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import com.deminadarya.pages.WebSteps;
-import org.junit.jupiter.api.BeforeEach;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -11,17 +16,18 @@ import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 
 public class CheckNameRepoIssueTest {
-    @BeforeEach
-    void setapp() {
-        Configuration.holdBrowserOpen = true;
-    }
 
-    private final static String repo =  "eroshenkoam/allure-example";
-    private final static String nameIssue =  "issue_to_test_allure_report";
-    private WebSteps steps = new WebSteps();
+    private final static String repo = "eroshenkoam/allure-example";
+    private final static String nameIssue = "issue_to_test_allure_report";
+    private final WebSteps steps = new WebSteps();
 
     @Test
+    @Feature("Issues")
+    @Story("Поиск по названию Issues")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Selenide.Название Issue содержится в разделе Issues")
     public void shouldHaveIssueNameWithoutAllureReport() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
         open("https://github.com");
         $(".header-search-input").setValue(repo).pressEnter();
         $("a[href$='/eroshenkoam/allure-example']").click();
@@ -30,6 +36,10 @@ public class CheckNameRepoIssueTest {
     }
 
     @Test
+    @Feature("Issues")
+    @Story("Поиск по названию Issues")
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("LambdaStep.Название Issue содержится в разделе Issues")
     public void shouldHaveIssueNameWithLambdaStep() {
         step("Открыть главную страницу",
                 () -> open("https://github.com"));
@@ -48,6 +58,10 @@ public class CheckNameRepoIssueTest {
     }
 
     @Test
+    @Feature("Issues")
+    @Story("Поиск по названию Issues")
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("AnnotationStep.Название Issue содержится в разделе Issues")
     public void shouldHaveIssueNameWithAnnotationStep() {
         steps.openMainPage();
         steps.searchRepo(repo);
